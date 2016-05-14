@@ -6,23 +6,23 @@
 <link rel="import" href="../iron-icon/iron-icon.html">
 
 <!--
-`<firebase-card>` wraps the content into a flexwrap paper-card container and provides a Firebase document
+`<firebase-card>` wraps the content into a flexwrap paper-card container
+and generates a firebase-input for each document leaf
 
 
 
-      <firebase-card
-        firebase-root="https://YOUR-FIREBASE.firebaseio.com/YOUR-COLLECTION/"
-        document-key="{{SOME-OBJECT.__firebaseKey__}}"
-        fire-document="{{fireDocument}}">
-        <paper-input label="SOME-PROPERTY" value="{{fireDocument.SOME-PROPERTY}}"></paper-input>
-        <paper-input label="SOME-OTHER-PROPERTY" value="{{fireDocument.SOME-OTHER-PROPERTY}}"></paper-input>
-      </firebase-card>
+
+    <firebase-card
+      firebase-root="https://YOUR-FIREBASE.firebaseio.com/YOUR-COLLECTION"
+      document-key="{{SOME-OBJECT.__firebaseKey__}}">
+    </firebase-card>
 
 
 
-In the above examplle replace YOUR-FIREBASE, YOUR-COLLECTION, SOME-PROPERTY, SOME-OTHER-PROPERTY with appropriate values from your Firebase.
 
-SOME-OBJECT is any Firebase document coming from YOUR-COLLECTION, fireDocument is the document provided by firebase-card.
+In the above examplle replace YOUR-FIREBASE, YOUR-COLLECTION with appropriate values from your Firebase.
+
+SOME-OBJECT is any Firebase document coming from YOUR-COLLECTION.
 
 The Firebase document is initiaized once both the firebase-root and document-key are provided.
 
@@ -47,7 +47,7 @@ The Firebase document is initiaized once both the firebase-root and document-key
       data="{{fireDocument}}"></firebase-document>
     <paper-card heading="{{fireDocument.name}}">
       <template is="dom-repeat" items="{{leaves}}" as="leaf">
-        <firebase-input firebase-root="{{getLeafUrl(leaf)}}" label="{{leaf}}"></firebase-input>
+        <firebase-input firebase-root="[[getLeafUrl(leaf)]]" label="[[leaf]]"></firebase-input>
       </template>
     </paper-card>
   </template>
@@ -112,9 +112,6 @@ function isObject(obj) {
       } else {
         return undefined;
       }
-    },
-    showLeafValue: function(leafDocument) {
-      return "stuff";
     }
   });
 </script>

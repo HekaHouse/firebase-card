@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 
-  <title>firebase-login demo</title>
+  <title>firebase-card demo</title>
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
@@ -41,12 +41,13 @@
 </head>
 <body unresolved>
   <div class="vertical-section-container centered">
-    <h3>Firebase Login prompts the user to login, once authenticated an iron-signal is fired named &quot;logged-in&quot; with the users uid as the data property.</h3>
+    <h3>Firebase Card displays a Firebase location as a set of paper-inputs with data paths as labels.</h3>
     <demo-snippet>
-      <template>
-        <firebase-login firebase-root="https://heka-house.firebaseio.com"></firebase-login>
-      </template>
-    </demo-snippet>    
+          <firebase-card
+            firebase-root="https://heka-house.firebaseio.com/demo"
+            document-key="{{item.__firebaseKey__}}">
+          </firebase-card>
+    </demo-snippet>
   </div>
 </body>
 </html>

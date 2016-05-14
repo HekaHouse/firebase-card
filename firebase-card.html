@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../firebase-element/firebase-document.html">
+<link rel="import" href="../firebase-input/firebase-input.html">
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
@@ -36,16 +37,28 @@ The Firebase document is initiaized once both the firebase-root and document-key
     :host {
       display: block;
     }
+    paper-card {
+      margin: 16px;
+      padding: 8px;
+    }
   </style>
     <firebase-document
       id="firebaseDocument"
       data="{{fireDocument}}"></firebase-document>
     <paper-card heading="{{fireDocument.name}}">
-      <content></content>
+      <template is="dom-repeat" items="{{leaves}}" as="leaf">
+        <firebase-input firebase-root="{{getLeafUrl(leaf)}}" label="{{leaf}}"></firebase-input>
+      </template>
     </paper-card>
   </template>
 </dom-module>
 <script>
+function isObject(obj) {
+  if (obj !== null && typeof obj === 'object') {
+    return true;
+  }
+  return false;
+}
   Polymer({
     is: 'firebase-card',
     properties: {
@@ -62,13 +75,46 @@ The Firebase document is initiaized once both the firebase-root and document-key
         type: String,
         notify: true,
         observer: 'applyKey'
+      },
+      leaves: {
+        type: Array,
+        notify: true,
+        computed: 'findLeaves(fireDocument)'
       }
+    },
+    findLeaves: function(fireDocument) {
+      var list = [];
+      (function(o, r) {
+        r = r || '';
+        if (typeof o != 'object') {
+          return true;
+        }
+        for (var c in o) {
+          if (arguments.callee(o[c], r + "/" + c)) {
+            list.push(r.substring(1) + "/" + c);
+          }
+        }
+      })(fireDocument);
+      return list;
+    },
+    leafValue: function(leafDocument) {
+      var val = leafDocument;
+      return val;
     },
     applyKey: function(incoming) {
       if (this.firebaseRoot && this.documentKey) {
         this.$.firebaseDocument.location=this.firebaseRoot+"/"+this.documentKey;
       }
     },
-
+    getLeafUrl: function(leaf) {
+      if (this.firebaseRoot && this.documentKey) {
+        return this.firebaseRoot+"/"+this.documentKey+"/"+leaf;
+      } else {
+        return undefined;
+      }
+    },
+    showLeafValue: function(leafDocument) {
+      return "stuff";
+    }
   });
 </script>

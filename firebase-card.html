@@ -1,0 +1,74 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../firebase-element/firebase-document.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+
+<!--
+`<firebase-card>` wraps the content into a flexwrap paper-card container and provides a Firebase document
+
+
+
+      <firebase-card
+        firebase-root="https://YOUR-FIREBASE.firebaseio.com/YOUR-COLLECTION/"
+        document-key="{{SOME-OBJECT.__firebaseKey__}}"
+        fire-document="{{fireDocument}}">
+        <paper-input label="SOME-PROPERTY" value="{{fireDocument.SOME-PROPERTY}}"></paper-input>
+        <paper-input label="SOME-OTHER-PROPERTY" value="{{fireDocument.SOME-OTHER-PROPERTY}}"></paper-input>
+      </firebase-card>
+
+
+
+In the above examplle replace YOUR-FIREBASE, YOUR-COLLECTION, SOME-PROPERTY, SOME-OTHER-PROPERTY with appropriate values from your Firebase.
+
+SOME-OBJECT is any Firebase document coming from YOUR-COLLECTION, fireDocument is the document provided by firebase-card.
+
+The Firebase document is initiaized once both the firebase-root and document-key are provided.
+
+@group HekaHouse
+@element firebase-card
+@demo demo/index.html
+-->
+
+<dom-module id="firebase-card">
+  <template>
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+    <firebase-document
+      id="firebaseDocument"
+      data="{{fireDocument}}"></firebase-document>
+    <paper-card heading="{{fireDocument.name}}">
+      <content></content>
+    </paper-card>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: 'firebase-card',
+    properties: {
+      fireDocument: {
+        type: Object,
+        notify: true
+      },
+      firebaseRoot: {
+        type: String,
+        notify: true,
+        observer: 'applyKey'
+      },
+      documentKey: {
+        type: String,
+        notify: true,
+        observer: 'applyKey'
+      }
+    },
+    applyKey: function(incoming) {
+      if (this.firebaseRoot && this.documentKey) {
+        this.$.firebaseDocument.location=this.firebaseRoot+"/"+this.documentKey;
+      }
+    },
+
+  });
+</script>

@@ -11,6 +11,6 @@ each document property is available for editing via the show detail button.
 
 
 
-In the above examplle replace YOUR-FIREBASE, YOUR-COLLECTION, SOME-PROPERTY, SOME-OTHER-PROPERTY with appropriate values from your Firebase.
+In the above examplle replace YOUR-FIREBASE, YOUR-COLLECTION, SOME-OBJECT with appropriate values from your Firebase.
 
 The Firebase document is initiaized once both the firebase-root and document-key are provided.

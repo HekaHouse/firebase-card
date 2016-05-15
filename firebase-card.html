@@ -103,17 +103,17 @@ firebase-card is designed for use inside of [firebase-list](https://HekaHouse.gi
       firebaseRoot: {
         type: String,
         notify: true,
-        observer: 'applyKey'
+        observer: '_applyPath'
       },
       documentKey: {
         type: String,
         notify: true,
-        observer: 'applyKey'
+        observer: '_applyPath'
       },
       leaves: {
         type: Array,
         notify: true,
-        computed: 'findLeaves(fireDocument)',
+        computed: '_findLeaves(fireDocument)',
         observer: 'cardsCollected'
       }
     },
@@ -122,11 +122,11 @@ firebase-card is designed for use inside of [firebase-list](https://HekaHouse.gi
     cardsCollected: function() {
       window.dispatchEvent(new Event('resize'));
     },
-    showDetails: function() {
+    _showDetails: function() {
       this.$.collapse.toggle();
     },
 
-    findLeaves: function(fireDocument) {
+    _findLeaves: function(fireDocument) {
       var list = [];
       (function(o, r) {
         r = r || '';
@@ -142,16 +142,16 @@ firebase-card is designed for use inside of [firebase-list](https://HekaHouse.gi
 
       return list;
     },
-    leafValue: function(leafDocument) {
+    _leafValue: function(leafDocument) {
       var val = leafDocument;
       return val;
     },
-    applyKey: function(incoming) {
+    _applyPath: function(incoming) {
       if (this.firebaseRoot && this.documentKey) {
         this.$.firebaseDocument.location=this.firebaseRoot+"/"+this.documentKey;
       }
     },
-    getLeafUrl: function(leaf) {
+    _getLeafUrl: function(leaf) {
       if (this.firebaseRoot && this.documentKey) {
         return this.firebaseRoot+"/"+this.documentKey+"/"+leaf;
       } else {

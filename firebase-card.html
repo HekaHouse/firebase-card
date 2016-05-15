@@ -74,16 +74,16 @@ firebase-card is designed for use inside of [firebase-list](https://HekaHouse.gi
     <paper-card heading="{{fireDocument.name}}">
       <div class="card-content">
         <div class="card-actions">
-          <paper-button id="detailToggle" on-tap="showDetails">Show Details</paper-button>
+          <paper-button id="detailToggle" on-tap="_showDetails">Show Details</paper-button>
         </div>
         <iron-collapse id="collapse">
           <template is="dom-repeat" items="{{leaves}}" as="leaf">
-            <firebase-input firebase-root="[[getLeafUrl(leaf)]]" label="[[leaf]]"></firebase-input>
+            <firebase-input firebase-root="[[_getLeafUrl(leaf)]]" label="[[leaf]]"></firebase-input>
           </template>
         </iron-collapse>
       </div>
     </paper-card>
-    <br/><br/><link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+    <br/><br/>
   </template>
 </dom-module>
 <script>
@@ -100,17 +100,17 @@ firebase-card is designed for use inside of [firebase-list](https://HekaHouse.gi
       firebaseRoot: {
         type: String,
         notify: true,
-        observer: 'applyKey'
+        observer: '_applyPath'
       },
       documentKey: {
         type: String,
         notify: true,
-        observer: 'applyKey'
+        observer: '_applyPath'
       },
       leaves: {
         type: Array,
         notify: true,
-        computed: 'findLeaves(fireDocument)',
+        computed: '_findLeaves(fireDocument)',
         observer: 'cardsCollected'
       }
     },
@@ -119,11 +119,11 @@ firebase-card is designed for use inside of [firebase-list](https://HekaHouse.gi
     cardsCollected: function() {
       window.dispatchEvent(new Event('resize'));
     },
-    showDetails: function() {
+    _showDetails: function() {
       this.$.collapse.toggle();
     },
 
-    findLeaves: function(fireDocument) {
+    _findLeaves: function(fireDocument) {
       var list = [];
       (function(o, r) {
         r = r || '';
@@ -139,16 +139,16 @@ firebase-card is designed for use inside of [firebase-list](https://HekaHouse.gi
 
       return list;
     },
-    leafValue: function(leafDocument) {
+    _leafValue: function(leafDocument) {
       var val = leafDocument;
       return val;
     },
-    applyKey: function(incoming) {
+    _applyPath: function(incoming) {
       if (this.firebaseRoot && this.documentKey) {
         this.$.firebaseDocument.location=this.firebaseRoot+"/"+this.documentKey;
       }
     },
-    getLeafUrl: function(leaf) {
+    _getLeafUrl: function(leaf) {
       if (this.firebaseRoot && this.documentKey) {
         return this.firebaseRoot+"/"+this.documentKey+"/"+leaf;
       } else {

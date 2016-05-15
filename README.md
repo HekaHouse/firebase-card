@@ -13,7 +13,7 @@ via the show detail button.
       document-key="{{SOME-OBJECT.__firebaseKey__}}">
     </firebase-card>
 
-In the above example replace YOUR-FIREBASE, YOUR-COLLECTION, SOME-PROPERTY, SOME-OTHER-PROPERTY with appropriate values from your Firebase.
+In the above example replace YOUR-FIREBASE, YOUR-COLLECTION, SOME-OBJECT with appropriate values from your Firebase.
 
 ## Note
 

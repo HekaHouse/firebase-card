@@ -1,6 +1,24 @@
 {
   "name": "firebase-card",
-  "private": true,
+  "version": "1.0.0",
+  "authors": [
+    "Aron Price <aron@heka.house>"
+  ],
+  "description": "wraps the content of a firebase-document into a paper-card and creates firebase-input elements for each value in the document.",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "firebase",
+    "paper-card",
+    "paper-input"
+  ],
+  "main": "firebase-card.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://HekaHouse.github.io/firebase-card/",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",
     "firebase-element": "GoogleWebComponents/firebase-element#^1.0.12",
@@ -8,5 +26,8 @@
     "iron-collapse": "PolymerElements/iron-collapse#^1.0.8",
     "firebase-input": "HekaHouse/firebase-input"
   },
-  "ignore": []
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "^4.0.0"
+  }
 }

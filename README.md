@@ -10,6 +10,10 @@ The card header contains the name property of the firebase-document.data,
 each document value is available for editing in paper-input elements
 via the show detail button.
 
+## Install
+
+    bower install --save HekaHouse/firebase-card
+
 ## Example
 
     <firebase-card

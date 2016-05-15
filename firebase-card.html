@@ -4,25 +4,22 @@
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
-
+<link rel="import" href="../iron-collapse/iron-collapse.html">
 <!--
-`<firebase-card>` wraps the content into a flexwrap paper-card container
-and generates a firebase-input for each document leaf
+`<firebase-card>` wraps the content into a paper-card container.
+The card header contains the name property of the firebase-document.data,
+each document property is available for editing via the show detail button.
 
 
 
-
-    <firebase-card
-      firebase-root="https://YOUR-FIREBASE.firebaseio.com/YOUR-COLLECTION"
-      document-key="{{SOME-OBJECT.__firebaseKey__}}">
-    </firebase-card>
-
+      <firebase-card
+        firebase-root="https://YOUR-FIREBASE.firebaseio.com/YOUR-COLLECTION/"
+        document-key="{{SOME-OBJECT.__firebaseKey__}}">
+      </firebase-card>
 
 
 
-In the above examplle replace YOUR-FIREBASE, YOUR-COLLECTION with appropriate values from your Firebase.
-
-SOME-OBJECT is any Firebase document coming from YOUR-COLLECTION.
+In the above examplle replace YOUR-FIREBASE, YOUR-COLLECTION, SOME-PROPERTY, SOME-OTHER-PROPERTY with appropriate values from your Firebase.
 
 The Firebase document is initiaized once both the firebase-root and document-key are provided.
 
@@ -38,8 +35,9 @@ The Firebase document is initiaized once both the firebase-root and document-key
       display: block;
     }
     paper-card {
-      margin: 16px;
+      margin: 32px;
       padding: 8px;
+      width: 90%;
       min-width: 300px;
     }
   </style>
@@ -47,10 +45,18 @@ The Firebase document is initiaized once both the firebase-root and document-key
       id="firebaseDocument"
       data="{{fireDocument}}"></firebase-document>
     <paper-card heading="{{fireDocument.name}}">
-      <template is="dom-repeat" items="{{leaves}}" as="leaf">
-        <firebase-input firebase-root="[[getLeafUrl(leaf)]]" label="[[leaf]]"></firebase-input>
-      </template>
+      <div class="card-content">
+        <div class="card-actions">
+          <paper-button id="detailToggle" on-tap="showDetails">Show Details</paper-button>
+        </div>
+        <iron-collapse id="collapse">
+          <template is="dom-repeat" items="{{leaves}}" as="leaf">
+            <firebase-input firebase-root="[[getLeafUrl(leaf)]]" label="[[leaf]]"></firebase-input>
+          </template>
+        </iron-collapse>
+      </div>
     </paper-card>
+    <br/><br/><link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
   </template>
 </dom-module>
 <script>
@@ -62,6 +68,8 @@ function isObject(obj) {
 }
   Polymer({
     is: 'firebase-card',
+
+
     properties: {
       fireDocument: {
         type: Object,
@@ -80,9 +88,13 @@ function isObject(obj) {
       leaves: {
         type: Array,
         notify: true,
-        computed: 'findLeaves(fireDocument)'
+        computed: 'findLeaves(fireDocument)',
       }
     },
+    showDetails: function() {
+      this.$.collapse.toggle();
+    },
+
     findLeaves: function(fireDocument) {
       var list = [];
       (function(o, r) {

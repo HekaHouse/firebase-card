@@ -2,7 +2,7 @@
 
 `<firebase-card>` wraps the content into a paper-card container.
 
-[API Docs and Demo](http://hekahouse.github.io/firebase-card/)
+[API Docs and Demo](https://heka-house-firebase-card-demo.firebaseapp.com/)
 
 [Source](http://github.com/hekahouse/firebase-card/)
 

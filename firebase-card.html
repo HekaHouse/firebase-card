@@ -93,7 +93,7 @@ function isObject(obj) {
       }
     },
     cardsCollected: function() {
-      alert('cards collected');
+      this.fire('iron-signal', {name: 'firebase-card-collected', data: true});
     },
     showDetails: function() {
       this.$.collapse.toggle();

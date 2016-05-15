@@ -1,32 +1,32 @@
-  <!doctype html>
-  <html>
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-      <title>firebase-card demo</title>
-      <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
-      <link rel="import" href="../firebase-card.html">
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>firebase-card demo</title>
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../firebase-card.html">
 
 
-      <style is="custom-style" include="demo-pages-shared-styles">
-        app-header span {
-          margin: 16px;
-        }
-      </style>
-    </head>
-    <body unresolved>
-      <template is="dom-bind">
-        <app-header condenses fixed effects="resize-title blend-background waterfall">
-          <span>loads a firebase element for display in a firebase-card.</span>
-        </app-header>
+    <style is="custom-style" include="demo-pages-shared-styles">
+      app-header span {
+        margin: 16px;
+      }
+    </style>
+  </head>
+  <body unresolved>
+    <template is="dom-bind">
+      <app-header condenses fixed effects="resize-title blend-background waterfall">
+        <span>loads a firebase element for display in a firebase-card.</span>
+      </app-header>
 
-        <firebase-card
-          firebase-root="https://ohio-voter.firebaseio.com/voters/43207/PRICE"
-          document-key="ARON">
-        </firebase-card>
+      <firebase-card
+        firebase-root="https://ohio-voter.firebaseio.com/voters/43207/PRICE"
+        document-key="ARON">
+      </firebase-card>
 
 
 
-    </template>
-  </body>
-  </html>
+  </template>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "firebase-input",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.2.0",
+    "firebase-element": "GoogleWebComponents/firebase-element#^1.0.12",
+    "paper-input": "PolymerElements/paper-input",
+    "paper-button": "PolymerElements/paper-button",
+    "iron-icon": "PolymerElements/iron-icon"
+  },
+  "ignore": [],
+  "homepage": "https://github.com/HekaHouse/firebase-input",
+  "_release": "bfbfe67ea5",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "bfbfe67ea56c2f197ffcf5cda6008ee3c39e78ca"
+  },
+  "_source": "git://github.com/HekaHouse/firebase-input.git",
+  "_target": "*",
+  "_originalSource": "HekaHouse/firebase-input"
+}

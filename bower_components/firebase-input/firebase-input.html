@@ -1,0 +1,76 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../firebase-element/firebase-document.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<!--
+`<firebase-input>` wraps a Firebase leaf in a paper-input for editing
+
+
+
+  <template is="dom-repeat" items="{{leaves}}" as="leaf">
+    <firebase-input firebase-root="https://YOUR-FIREBASE.firebaseio.com/YOUR-COLLECTION/YOUR-ITEM/LEAF-PATH" label="leaf"></firebase-input>
+  </template>
+
+
+
+In the above examplle replace YOUR-FIREBASE, YOUR-COLLECTION, YOUR-ITEM and LEAF-PATH with appropriate values from your Firebase.
+
+Leaves are the full paths to Firebase values ie https://YOUR-FIREBASE.firebaseio.com/users/name/first-name
+
+The Firebase document is initiaized once the firebase-root is provided.
+
+@group HekaHouse
+@element firebase-input
+@demo demo/index.html
+-->
+
+<dom-module id="firebase-input">
+  <template>
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+    <firebase-document
+      id="firebaseDocument"
+      data="{{leafDocument}}"></firebase-document>
+    <paper-input id="fireInput" label="{{label}}" on-change="applyChange"></paper-input>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: 'firebase-input',
+    properties: {
+      firebaseRoot: {
+        type: String,
+        notify: true,
+        observer: 'applyLocation'
+      },
+      label: {
+        type: String,
+        notify: true
+      },
+      leafDocument: {
+        type: Object,
+        notify: true,
+        observer: 'applyDocument'
+      }
+    },
+    applyLocation: function(firebaseRoot) {
+      if (firebaseRoot) {
+        this.$.firebaseDocument.location=this.firebaseRoot;
+      }
+    },
+    applyDocument: function(leafDocument) {
+      if (leafDocument) {
+        this.$.fireInput.value=leafDocument;
+      }
+    },
+    applyChange: function(leafDocument) {
+      var ref = new Firebase(this.firebaseRoot);
+      ref.set(this.$.fireInput.value);
+    }
+
+  });
+</script>

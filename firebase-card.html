@@ -93,7 +93,7 @@ function isObject(obj) {
       }
     },
     cardsCollected: function() {
-      document.querySelector('iron-list').fire('resize');
+      window.dispatchEvent(new Event('resize'));
     },
     showDetails: function() {
       this.$.collapse.toggle();

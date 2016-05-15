@@ -40,8 +40,8 @@ Then, go ahead and download the element's dependencies:
 
 firebase-card depends on
 
-[firebase-input](https://github.com/HekaHouse/firebase-input)
+[firebase-input](https://heka-house-firebase-input-demo.firebaseapp.com/)
 
 ## Related
 
-firebase-card is designed for use inside of [firebase-list](https://HekaHouse.github.io/firebase-list)
+firebase-card is designed for use inside of [firebase-list](https://heka-house-firebase-list-demo.firebaseapp.com/)

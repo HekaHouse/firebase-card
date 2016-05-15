@@ -2,9 +2,9 @@
 
 `<firebase-card>` wraps the content into a paper-card container.
 
-    [API Docs and Demo](http://hekahouse.github.io/firebase-card/)
+[API Docs and Demo](http://hekahouse.github.io/firebase-card/)
 
-    [Source](http://github.com/hekahouse/firebase-card/)
+[Source](http://github.com/hekahouse/firebase-card/)
 
 The card header contains the name property of the firebase-document.data,
 each document value is available for editing in paper-input elements

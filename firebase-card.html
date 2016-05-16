@@ -65,7 +65,7 @@ firebase-card is designed for use inside of [firebase-list](https://heka-house-f
     :host {
       display: block;
     }
-    paper-card {      
+    paper-card {
       padding: 8px;
       width: 90%;
       min-width: 300px;
@@ -96,36 +96,50 @@ firebase-card is designed for use inside of [firebase-list](https://heka-house-f
 
 
     properties: {
+      /**
+      * Firebase Document assigned to card
+      * @type {{elements: FirebaseDocument}}
+      */
       fireDocument: {
         type: Object,
         notify: true
       },
+      /**
+      * URL to firebase collection
+      */
       firebaseRoot: {
         type: String,
         notify: true,
         observer: '_applyPath'
       },
+      /**
+      * Key to document assigned to card
+      */
       documentKey: {
         type: String,
         notify: true,
         observer: '_applyPath'
       },
+      /**
+     * Firebase value paths
+     * computed from _findLeaves(fireDocument)
+     * @type {{elements: Array<String>}}
+     */
       leaves: {
         type: Array,
         notify: true,
-        computed: '_findLeaves(fireDocument)',
-        observer: 'cardsCollected'
+        computed: '_findLeaves(fireDocument)'
       }
     },
-    //this is supposed to resize the parent when new cards are added,
-    //not yet working
-    cardsCollected: function() {
-      window.dispatchEvent(new Event('resize'));
-    },
+    /**
+    * Open or close the details secction, triggered by show details button
+    */
     _showDetails: function() {
       this.$.collapse.toggle();
     },
-
+    /**
+    * Generate a list of paths to all values for a Firebasse Document
+    */
     _findLeaves: function(fireDocument) {
       var list = [];
       (function(o, r) {
@@ -142,15 +156,18 @@ firebase-card is designed for use inside of [firebase-list](https://heka-house-f
 
       return list;
     },
-    _leafValue: function(leafDocument) {
-      var val = leafDocument;
-      return val;
-    },
+    /**
+    * Set Firebase Document location fires for both firebaseRoot and documentKey
+    * only applies once both have fired
+    */
     _applyPath: function(incoming) {
       if (this.firebaseRoot && this.documentKey) {
         this.$.firebaseDocument.location=this.firebaseRoot+"/"+this.documentKey;
       }
     },
+    /**
+    * Build the Firebase URL for a specific value node
+    */
     _getLeafUrl: function(leaf) {
       if (this.firebaseRoot && this.documentKey) {
         return this.firebaseRoot+"/"+this.documentKey+"/"+leaf;

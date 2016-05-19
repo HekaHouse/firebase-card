@@ -13,8 +13,8 @@
     "paper-input"
   ],
   "main": "firebase-card.html",
-  "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://HekaHouse.github.io/firebase-card/",
+  "license": "https://heka-house-polymer-demos.firebaseapp.com/LICENSE",
+  "homepage": "https://github.com/HekaHouse/firebase-card/",
   "ignore": [
     "/.*",
     "/test/"

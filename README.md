@@ -1,8 +1,8 @@
 # firebase-card
 
-`<firebase-card>` wraps the content into a paper-card container.
+`<firebase-card>` wraps the content of a firebase-document into a paper-card container.
 
-[API Docs and Demo](https://heka-house-firebase-card-demo.firebaseapp.com/)
+[API Docs and Demo](https://heka-house-polymer-demos.firebaseapp.com/firebase-card)
 
 [Source](http://github.com/hekahouse/firebase-card/)
 
@@ -40,8 +40,8 @@ Then, go ahead and download the element's dependencies:
 
 firebase-card depends on
 
-[firebase-input](https://heka-house-firebase-input-demo.firebaseapp.com/)
+[firebase-input](https://heka-house-polymer-demos.firebaseapp.com/firebase-input)
 
 ## Related
 
-firebase-card is designed for use inside of [firebase-list](https://heka-house-firebase-list-demo.firebaseapp.com/)
+firebase-card is designed for use inside of [firebase-list](https://heka-house-polymer-demos.firebaseapp.com/firebase-list)

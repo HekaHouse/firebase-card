@@ -17,15 +17,24 @@ via the show detail button.
 ## Example
 
     <firebase-card
-      firebase-root="https://YOUR-FIREBASE.firebaseio.com/YOUR-COLLECTION/"
-      document-key="{{SOME-OBJECT.__firebaseKey__}}">
+      app-name="heka-house"
+      user="{{user}}"
+      app="{{app}}"
+      firebase-branch="/sample"
+      document-key="Hatfield Sparks" readonly>
     </firebase-card>
 
-In the above example replace YOUR-FIREBASE, YOUR-COLLECTION, SOME-OBJECT with appropriate values from your Firebase.
+The Firebase document is initiaized once the user and app properties are provided.
+
+These come from associated firebase-app and firebase-auth elements
 
 ## Note
 
-The Firebase document is initiaized once both the firebase-root and document-key are provided.
+firebase-branch corresponds to the path property of a firebase-document,
+
+this path should lead to a collection, designed to be a collection from a [firebase-list](https://heka-house-polymer-demos.firebaseapp.com/firebase-list)
+
+document-key represents the key for an item in the collection specified in firebase-branch
 
 ## Dependencies
 
@@ -41,6 +50,8 @@ Then, go ahead and download the element's dependencies:
 firebase-card depends on
 
 [firebase-input](https://heka-house-polymer-demos.firebaseapp.com/firebase-input)
+
+and uses the pre-release [polymerfire](https://github.com/firebase/polymerfire)
 
 ## Related
 

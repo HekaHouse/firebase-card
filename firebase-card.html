@@ -1,5 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../firebase-element/firebase-document.html">
+<link rel="import" href="../polymerfire/firebase-document.html">
 <link rel="import" href="../firebase-input/firebase-input.html">
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../paper-input/paper-input.html">
@@ -10,7 +10,7 @@
 
 `<firebase-card>` wraps the content of a firebase-document into a paper-card container.
 
-[API Docs and Demo](https://heka-house-polymer-demos.firebaseapp.com/)
+[API Docs and Demo](https://heka-house-polymer-demos.firebaseapp.com/firebase-card)
 
 [Source](http://github.com/hekahouse/firebase-card/)
 
@@ -25,15 +25,24 @@ via the show detail button.
 ## Example
 
     <firebase-card
-      firebase-root="https://YOUR-FIREBASE.firebaseio.com/YOUR-COLLECTION/"
-      document-key="{{SOME-OBJECT.__firebaseKey__}}">
+      app-name="heka-house"
+      user="{{user}}"
+      app="{{app}}"
+      firebase-branch="/sample"
+      document-key="Hatfield Sparks" readonly>
     </firebase-card>
 
-In the above example replace YOUR-FIREBASE, YOUR-COLLECTION, SOME-OBJECT with appropriate values from your Firebase.
+The Firebase document is initiaized once the user and app properties are provided.
+
+These come from associated firebase-app and firebase-auth elements
 
 ## Note
 
-The Firebase document is initiaized once both the firebase-root and document-key are provided.
+firebase-branch corresponds to the path property of a firebase-document,
+
+this path should lead to a collection, designed to be a collection from a [firebase-list](https://heka-house-polymer-demos.firebaseapp.com/firebase-list)
+
+document-key represents the key for an item in the collection specified in firebase-branch
 
 ## Dependencies
 
@@ -48,11 +57,13 @@ Then, go ahead and download the element's dependencies:
 
 firebase-card depends on
 
-[firebase-input](https://heka-house-polymer-demos.firebaseapp.com/)
+[firebase-input](https://heka-house-polymer-demos.firebaseapp.com/firebase-input)
+
+and uses the pre-release [polymerfire](https://github.com/firebase/polymerfire)
 
 ## Related
 
-firebase-card is designed for use inside of [firebase-list](https://heka-house-polymer-demos.firebaseapp.com/)
+firebase-card is designed for use inside of [firebase-list](https://heka-house-polymer-demos.firebaseapp.com/firebase-list)
 
 @group HekaHouse
 @element firebase-card
@@ -73,6 +84,7 @@ firebase-card is designed for use inside of [firebase-list](https://heka-house-p
   </style>
     <firebase-document
       id="firebaseDocument"
+      app-name="{{appName}}"
       data="{{fireDocument}}"></firebase-document>
     <paper-card heading="{{fireDocument.name}}">
       <div class="card-content">
@@ -81,7 +93,13 @@ firebase-card is designed for use inside of [firebase-list](https://heka-house-p
         </div>
         <iron-collapse id="collapse">
           <template is="dom-repeat" items="{{leaves}}" as="leaf">
-            <firebase-input firebase-root="[[_getLeafUrl(leaf)]]" label="[[leaf]]"></firebase-input>
+            <firebase-input
+              user="{{user}}"
+              app="{{app}}"
+              firebase-branch="[[_getLeafUrl(leaf)]]"
+              label="[[leaf]]"
+              app-name="{{appName}}"
+              readonly=""{{readonly}}></firebase-input>
           </template>
         </iron-collapse>
       </div>
@@ -107,18 +125,42 @@ firebase-card is designed for use inside of [firebase-list](https://heka-house-p
       /**
       * URL to firebase collection
       */
-      firebaseRoot: {
+      firebaseBranch: {
         type: String,
-        notify: true,
-        observer: '_applyPath'
+        notify: true
+      },
+      /**
+      * Firebase App name used in firebase-app
+      */
+      appName: {
+        type: String,
+        notify: true
+      },
+
+      /**
+      * Firebase user to ensure setup
+      */
+      user: {
+        type: Object,
+        notify: true
+      },
+      /**
+      * Firebase app to ensure setup
+      */
+      app: {
+        type: Object,
+        notify: true
       },
       /**
       * Key to document assigned to card
       */
       documentKey: {
         type: String,
-        notify: true,
-        observer: '_applyPath'
+        notify: true
+      },
+      readonly: {
+        type: Boolean,
+        notify: true
       },
       /**
      * Firebase value paths
@@ -131,6 +173,7 @@ firebase-card is designed for use inside of [firebase-list](https://heka-house-p
         computed: '_findLeaves(fireDocument)'
       }
     },
+    observers: ['_applyPath(firebaseBranch,appName,documentKey,app,user)'],
     /**
     * Open or close the details secction, triggered by show details button
     */
@@ -157,20 +200,23 @@ firebase-card is designed for use inside of [firebase-list](https://heka-house-p
       return list;
     },
     /**
-    * Set Firebase Document location fires for both firebaseRoot and documentKey
+    * Set Firebase Document location fires for both firebaseBranch and documentKey
     * only applies once both have fired
     */
-    _applyPath: function(incoming) {
-      if (this.firebaseRoot && this.documentKey) {
-        this.$.firebaseDocument.location=this.firebaseRoot+"/"+this.documentKey;
+    _applyPath: function(firebaseBranch,appName,documentKey,app,user) {
+      if (app && user) {
+          this.$.firebaseDocument.path=firebaseBranch+"/"+documentKey;
       }
     },
     /**
     * Build the Firebase URL for a specific value node
     */
     _getLeafUrl: function(leaf) {
-      if (this.firebaseRoot && this.documentKey) {
-        return this.firebaseRoot+"/"+this.documentKey+"/"+leaf;
+      if (this.firebaseBranch && this.documentKey) {
+        if (leaf.substring(0,1) === '/') {
+          leaf = leaf.substring(1);
+        }
+        return this.firebaseBranch+"/"+this.documentKey+"/"+leaf;
       } else {
         return undefined;
       }

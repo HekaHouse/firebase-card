@@ -4,7 +4,9 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
       <title>firebase-card demo</title>
-      <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+      <script src="../..//webcomponentsjs/webcomponents-lite.min.js"></script>
+      <link rel="import" href="../../polymerfire/firebase-app.html">
+      <link rel="import" href="../../polymerfire/firebase-auth.html">
       <link rel="import" href="../firebase-card.html">
 
 
@@ -19,14 +21,30 @@
         <app-header condenses fixed effects="resize-title blend-background waterfall">
           <span>loads a firebase element for display in a firebase-card.</span>
         </app-header>
-
+        <firebase-app
+          id="app"
+          name="heka-house"
+          api-key="AIzaSyAM7IlkZhK9aqSmMgBtQ8KqoCb1OAtCBow"
+          auth-domain="heka-house-polymer-demos.firebaseapp.com"
+          database-url="https://heka-house-polymer-demos.firebaseio.com"
+          app="{{app}}">
+        </firebase-app>
+        <firebase-auth
+          id="auth"
+          app-name="heka-house"
+          user="{{user}}"></firebase-auth>
         <firebase-card
-          firebase-root="https://heka-house-polymer-demos.firebaseio.com/sample"
-          document-key="Hatfield Sparks">
+          app-name="heka-house"
+          user="{{user}}"
+          app="{{app}}"
+          firebase-branch="/sample"
+          document-key="Hatfield Sparks" readonly>
         </firebase-card>
-
-
-
     </template>
+    <script type="text/javascript">
+      document.addEventListener('WebComponentsReady', function() {
+        document.querySelector('firebase-auth').signInAnonymously();
+      });
+    </script>
   </body>
   </html>

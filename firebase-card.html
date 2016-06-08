@@ -86,7 +86,7 @@ firebase-card is designed for use inside of [firebase-list](https://heka-house-p
       id="firebaseDocument"
       app-name="{{appName}}"
       data="{{fireDocument}}"></firebase-document>
-    <paper-card heading="{{fireDocument.name}}">
+    <paper-card heading="{{fireDocument.name}}" hidden="{{hidden}}">
       <div class="card-content">
         <div class="card-actions">
           <paper-button id="detailToggle" on-tap="_showDetails">Show Details</paper-button>
@@ -161,6 +161,10 @@ firebase-card is designed for use inside of [firebase-list](https://heka-house-p
       readonly: {
         type: Boolean,
         notify: true
+      },
+      hidden: {
+        type: Boolean,
+        notify: false
       },
       /**
      * Firebase value paths
